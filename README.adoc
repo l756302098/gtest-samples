@@ -1,6 +1,8 @@
-# gtest-samples
-gtest samples
+= Google Test Unit Testing Framework
+:toc:
+:toc-placement!:
 
+toc::[]
 
 
 # Introduction
