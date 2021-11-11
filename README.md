@@ -1,7 +1,5 @@
 # gtest-samples
-gtest samples
-
-
+gtest samples && lcov
 
 # Introduction
 
@@ -36,8 +34,14 @@ $ tree
 
 # Requirements
 
+[gtest]  
 An internet connection. This example will download the google test library the first time you run the CMake configure step. See the 
-link:https://github.com/google/googletest/blob/master/googletest/README.md[google test readme] and link:http://crascit.com/2015/07/25/cmake-gtest/[here] for details. 
+link:https://github.com/google/googletest/blob/master/googletest/README.md[google test readme] and link:http://crascit.com/2015/07/25/cmake-gtest/[here] for details.
+
+[lcov]  
+1.git clone git@github.com:linux-test-project/lcov.git   
+2.cd lcov  
+3.sudo make install  
 
 # Concepts
 
