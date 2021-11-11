@@ -108,92 +108,9 @@ $ mkdir build
 
 $ cd build/
 
-$ cmake ..
--- The C compiler identification is GNU 5.4.0
--- The CXX compiler identification is GNU 5.4.0
--- Check for working C compiler: /usr/bin/cc
--- Check for working C compiler: /usr/bin/cc -- works
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Detecting C compile features
--- Detecting C compile features - done
--- Check for working CXX compiler: /usr/bin/c++
--- Check for working CXX compiler: /usr/bin/c++ -- works
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Configuring done
--- Generating done
--- Build files have been written to: /data/data/code/cmake-examples/05-unit-testing/google-test-download/build/3rd_party/google-test/googletest-download
-Scanning dependencies of target googletest
-[ 11%] Creating directories for 'googletest'
-[ 22%] Performing download step (download, verify and extract) for 'googletest'
--- downloading...
-     src='https://github.com/google/googletest/archive/bfc0ffc8a698072c794ae7299db9cb6866f4c0bc.tar.gz'
-     dst='/data/data/code/cmake-examples/05-unit-testing/google-test-download/build/3rd_party/google-test/googletest-download/googletest-prefix/src/bfc0ffc8a698072c794ae7299db9cb6866f4c0bc.tar.gz'
-     timeout='none'
--- downloading... done
--- verifying file...
-     file='/data/data/code/cmake-examples/05-unit-testing/google-test-download/build/3rd_party/google-test/googletest-download/googletest-prefix/src/bfc0ffc8a698072c794ae7299db9cb6866f4c0bc.tar.gz'
--- verifying file... warning: did not verify file - no URL_HASH specified?
--- extracting...
-     src='/data/code/cmake-examples/05-unit-testing/google-test-download/build/3rd_party/google-test/googletest-download/googletest-prefix/src/bfc0ffc8a698072c794ae7299db9cb6866f4c0bc.tar.gz'
-     dst='/data/code/cmake-examples/05-unit-testing/google-test-download/build/3rd_party/google-test/googletest-src'
--- extracting... [tar xfz]
--- extracting... [analysis]
--- extracting... [rename]
--- extracting... [clean up]
--- extracting... done
-[ 33%] No patch step for 'googletest'
-[ 44%] No update step for 'googletest'
-[ 55%] No configure step for 'googletest'
-[ 66%] No build step for 'googletest'
-[ 77%] No install step for 'googletest'
-[ 88%] No test step for 'googletest'
-[100%] Completed 'googletest'
-[100%] Built target googletest
--- Found PythonInterp: /usr/bin/python (found version "2.7.12") 
--- Looking for pthread.h
--- Looking for pthread.h - found
--- Looking for pthread_create
--- Looking for pthread_create - not found
--- Check if compiler accepts -pthread
--- Check if compiler accepts -pthread - yes
--- Found Threads: TRUE  
--- Configuring done
--- Generating done
--- Build files have been written to: /data/code/cmake-examples/05-unit-testing/google-test-download/build
+$ cmake -DENABLE_COVERAGE=ON ..
 
-$ make
-Scanning dependencies of target example_google_test
-[  6%] Building CXX object CMakeFiles/example_google_test.dir/Reverse.cpp.o
-[ 12%] Building CXX object CMakeFiles/example_google_test.dir/Palindrome.cpp.o
-[ 18%] Linking CXX static library libexample_google_test.a
-[ 18%] Built target example_google_test
-Scanning dependencies of target gtest
-[ 25%] Building CXX object 3rd_party/google-test/googletest-build/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
-[ 31%] Linking CXX static library libgtest.a
-[ 31%] Built target gtest
-Scanning dependencies of target gtest_main
-[ 37%] Building CXX object 3rd_party/google-test/googletest-build/googlemock/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o
-[ 43%] Linking CXX static library libgtest_main.a
-[ 43%] Built target gtest_main
-Scanning dependencies of target unit_tests
-[ 50%] Building CXX object CMakeFiles/unit_tests.dir/unit_tests.cpp.o
-[ 56%] Linking CXX executable unit_tests
-[ 56%] Built target unit_tests
-Scanning dependencies of target gmock_main
-[ 62%] Building CXX object 3rd_party/google-test/googletest-build/googlemock/CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.o
-[ 68%] Building CXX object 3rd_party/google-test/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock-all.cc.o
-[ 75%] Building CXX object 3rd_party/google-test/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o
-[ 81%] Linking CXX static library libgmock_main.a
-[ 81%] Built target gmock_main
-Scanning dependencies of target gmock
-[ 87%] Building CXX object 3rd_party/google-test/googletest-build/googlemock/CMakeFiles/gmock.dir/__/googletest/src/gtest-all.cc.o
-[ 93%] Building CXX object 3rd_party/google-test/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o
-[100%] Linking CXX static library libgmock.a
-[100%] Built target gmock
+$ make -j2
 
 $ make test
 Running tests...
@@ -209,21 +126,14 @@ Total Test time (real) =   0.00 sec
 If the code is changed and it causes the unit tests to produce an error.
 Then when running the tests you will see the following output.
 
-[source,bash]
+[lcov]
 ----
-$ make test
-Running tests...
-Test project /data/code/cmake-examples/05-unit-testing/google-test-download/build
-    Start 1: test_all
-1/1 Test #1: test_all .........................***Failed    0.00 sec
+$ cd ./build
 
-0% tests passed, 1 tests failed out of 1
+$ ./unit_tests
 
-Total Test time (real) =   0.00 sec
+$ cd ./build/CMakeFiles/unit_tests.dir 
 
-The following tests FAILED:
-    1 - test_all (Failed)
-Errors while running CTest
-Makefile:72: recipe for target 'test' failed
-make: *** [test] Error 8
-----
+$ lcov -c -o result.info  -b . -d . 
+
+$ genhtml result.info -o Report 
